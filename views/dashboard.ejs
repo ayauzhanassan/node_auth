@@ -9,16 +9,25 @@
         <button type="submit">Upload New Picture</button>
     </form>
 
+    <% if (!user.is2FAEnabled) { %>
+      <p>Secure your account with 2FA:</p>
+      <a href="/2fa/setup"><button>Enable 2FA</button></a>
+    <% } else { %>
+        <p>2FA is enabled on your account.</p>
+    <% } %>
+
     <h2>Manage your account below:</h2>
 
     <form action="/edit" method="POST">
-        <input type="text" name="username" value="<%= user.username %>" required><br>
+        <input type="text" name="username" placeholder="Username" required><br>
         <button type="submit">Update Username</button>
     </form>
 
+    <hr>
     <form action="/delete" method="POST">
         <button type="submit" onclick="return confirm('Are you sure?')">Delete Account</button>
     </form>
+    <hr>
 
     <br>
     <a href="/logout">Logout</a>

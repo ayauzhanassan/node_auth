@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="/styles.css">
+<div class="container">
+    <h2>Enter 2FA Code</h2>
+    <p>Check Google Authenticator for your 6-digit code.</p>
+
+    <form action="/2fa/verify" method="POST">
+        <input type="text" name="token" placeholder="Enter OTP" required><br>
+        <button type="submit">Verify</button>
+    </form>
+
+    <% if (error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
+
+    <br>
+    <a href="/logout">Cancel</a>
+</div>

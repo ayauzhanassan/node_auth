@@ -8,12 +8,12 @@ router.get("/", (req, res) => {
     res.render("login", { error: null });
 });
 
-// Render Register Page with Errors
+// Render Register 
 router.get("/register", (req, res) => {
     res.render("register", { error: null });
 });
 
-// Render Login Page with Errors
+// Render Login 
 router.get("/login", (req, res) => {
     res.render("login", { error: null });
 });
@@ -74,6 +74,12 @@ router.post("/login", async (req, res) => {
             return res.render("login", { error: "Incorrect password" });
         }
 
+        // 2FA Check
+        if (user.is2FAEnabled) {
+            req.session.tempUser = user._id; 
+            return res.redirect("/2fa/verify");
+        }
+
         // Reset failed attempts if login is successful
         user.failedAttempts = 0;
         user.lockUntil = null;
@@ -85,6 +91,7 @@ router.post("/login", async (req, res) => {
         res.render("login", { error: "Server error, please try again" });
     }
 });
+
 
 
 // Logout
